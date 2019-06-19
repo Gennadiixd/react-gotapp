@@ -32,7 +32,7 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar() {
+    updateChar = () => {
         const id = Math.floor(Math.random() * 150 * 11);
         // const id = 13000000000
         this.charService.getCharacter(id)
@@ -45,7 +45,7 @@ export default class RandomChar extends Component {
 
         const { char, loading, error } = this.state
 
-        const errorMessage = error ? <ErrorMessage error = {error}/> : null;
+        const errorMessage = error ? <ErrorMessage error={error} /> : null;
         //const component = loading ? <Spinner /> : <View char={char} />       
         const spinner = loading ? <Spinner /> : null;
         //проверка на загрузку и ошибку если ок выводим компонент

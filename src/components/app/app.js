@@ -2,14 +2,23 @@ import React from 'react';
 import { Col, Row, Container } from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
-
+import ErrorMessage from '../errrorMessage'
+import CharacterPage from '../characterPage/characterPage'
 import GotCharService from '../../services/GotService'
 
 
 class App extends React.Component {
-    state = { randomChar: false }
+    state = {
+        randomChar: false,
+        error: false,
+    }
+
+    componentDidCatch() {
+        console.log('got it app')
+        this.setState({
+            error: true,
+        })
+    }
     // gotChar = new GotCharService();
 
     // updateRandomCharacter() {
@@ -25,6 +34,7 @@ class App extends React.Component {
     //     this.updateRandomCharacter()
     // }
 
+
     showRandomChar = async () => {
         await this.setState(({ randomChar }) => {
             return { randomChar: !randomChar }
@@ -35,9 +45,13 @@ class App extends React.Component {
         const { randomChar } = this.state;
         const randomCharContent = randomChar ? <RandomChar {...this.state.randomChar} /> : null;
 
+        if (this.state.error) {
+            return <ErrorMessage />
+        }
+
         return (
             <>
-                <button onClick={this.showRandomChar} />
+
                 <Container>
                     <Header />
                 </Container>
@@ -46,16 +60,10 @@ class App extends React.Component {
                         <Col lg={{ size: 5, offset: 0 }}>
                             {/* <RandomChar {...this.state.randomChar} /> */}
                             {randomCharContent}
+                            <button onClick={this.showRandomChar} > Toggle Random Char</button>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList />
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails />
-                        </Col>
-                    </Row>
+                    <CharacterPage />
                 </Container>
             </>
         );

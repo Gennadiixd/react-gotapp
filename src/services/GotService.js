@@ -16,7 +16,8 @@ export default class GotCharService {
     }
 
     async getAllCharacters() {
-        const res = await this.getResource();
+        const url = '?page=1&pageSize=10'
+        const res = await this.getResource(url);
         //по мапу запускаем трансформчар VIA, попадает только V
         return res.map(this._transformChar);
     }
