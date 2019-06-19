@@ -9,28 +9,43 @@ import GotCharService from '../../services/GotService'
 
 
 class App extends React.Component {
-    state = { randomChar: 'null' }
+    state = { randomChar: false }
+    // gotChar = new GotCharService();
 
-    componentDidMount() {
-        this.gotChar = new GotCharService();
-        this.gotChar.getRandomCharacter()
-            .then((data) => {
-                this.setState(({ randomChar }) => {
-                    return { randomChar: data }
-                })
-            })
+    // updateRandomCharacter() {
+    //     this.gotChar.getRandomCharacter()
+    //         .then((char) => {
+    //             this.setState(({ randomChar }) => {
+    //                 return { randomChar: char }
+    //             })
+    //         })
+    // }
+
+    // componentDidMount() {
+    //     this.updateRandomCharacter()
+    // }
+
+    showRandomChar = async () => {
+        await this.setState(({ randomChar }) => {
+            return { randomChar: !randomChar }
+        })
     }
 
     render() {
+        const { randomChar } = this.state;
+        const randomCharContent = randomChar ? <RandomChar {...this.state.randomChar} /> : null;
+
         return (
             <>
+                <button onClick={this.showRandomChar} />
                 <Container>
                     <Header />
                 </Container>
                 <Container>
                     <Row>
                         <Col lg={{ size: 5, offset: 0 }}>
-                            <RandomChar {...this.state.randomChar} />
+                            {/* <RandomChar {...this.state.randomChar} /> */}
+                            {randomCharContent}
                         </Col>
                     </Row>
                     <Row>
