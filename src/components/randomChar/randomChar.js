@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GotCharService from '../../services/GotService'
+import GotService from '../../services/GotService'
 import Spinner from '../spinner'
 import ErrorMessage from '../errrorMessage'
 import './randomChar.css';
@@ -10,7 +10,7 @@ export default class RandomChar extends Component {
         this.updateChar()
     }
 
-    charService = new GotCharService();
+    charService = new GotService();
 
     state = {
         char: {},
@@ -41,12 +41,11 @@ export default class RandomChar extends Component {
             .catch(this.onError)
     }
 
-    render() {
+    render() {        
 
         const { char, loading, error } = this.state
 
-        const errorMessage = error ? <ErrorMessage error={error} /> : null;
-        //const component = loading ? <Spinner /> : <View char={char} />       
+        const errorMessage = error ? <ErrorMessage error={error} /> : null;     
         const spinner = loading ? <Spinner /> : null;
         //проверка на загрузку и ошибку если ок выводим компонент
         const content = !(loading || error) ? <View char={char} /> : null;
@@ -61,7 +60,7 @@ export default class RandomChar extends Component {
     }
 }
 
-//Вынесли вёрстку, в пропсах принимаем char по деструктуризации
+//Вынесли вёрстку, в пропсах принимаем char и деструктуризируем
 const View = ({ char }) => {
 
     const { gender, born, died, culture, name } = char
